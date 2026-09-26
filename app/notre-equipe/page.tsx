@@ -3,7 +3,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { CtaBanner } from "@/components/sections/CtaBanner";
+import { TrustBadge } from "@/components/ui/TrustBadge";
 import { company, teamFunctions } from "@/lib/site-config";
 import { User } from "lucide-react";
 
@@ -29,7 +29,9 @@ export default function NotreEquipePage() {
               <User className="h-14 w-14" strokeWidth={1.5} />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-ink">{company.founder}</h2>
+              <h2 className="font-display text-2xl font-semibold text-ink">
+                {company.founder}
+              </h2>
               <p className="text-sm font-semibold uppercase tracking-wide text-clay-dark">
                 {company.founderRole}
               </p>
@@ -45,6 +47,9 @@ export default function NotreEquipePage() {
                 démontrant que les déchets peuvent devenir une source de valeur
                 et d&apos;opportunités.
               </p>
+              <div className="mt-5">
+                <TrustBadge />
+              </div>
             </div>
           </Container>
         </Reveal>
@@ -71,7 +76,6 @@ export default function NotreEquipePage() {
         </Container>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

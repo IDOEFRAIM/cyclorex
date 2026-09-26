@@ -18,16 +18,22 @@ export function SectionHeading({
       className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : "text-left"}`}
     >
       {eyebrow ? (
-        <span
-          className={`mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] ${
-            light ? "text-lime" : "text-forest-light"
-          }`}
-        >
-          {eyebrow}
-        </span>
+        <div className={align === "center" ? "flex flex-col items-center" : ""}>
+          <span
+            className={`inline-block text-xs font-bold uppercase tracking-[0.2em] ${
+              light ? "text-lime" : "text-forest-light"
+            }`}
+          >
+            {eyebrow}
+          </span>
+          <span
+            aria-hidden
+            className={`mt-3 mb-3 block h-px w-10 ${light ? "bg-gold" : "bg-gold-dark/60"}`}
+          />
+        </div>
       ) : null}
       <h2
-        className={`text-3xl font-bold tracking-tight sm:text-4xl ${
+        className={`font-display text-3xl font-semibold tracking-tight sm:text-4xl ${
           light ? "text-cream" : "text-ink"
         }`}
       >

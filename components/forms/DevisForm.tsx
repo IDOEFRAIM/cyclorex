@@ -5,20 +5,38 @@ import { Button } from "@/components/ui/Button";
 import { FormSuccess } from "@/components/forms/FormSuccess";
 import { inputClass, labelClass } from "@/components/forms/fieldStyles";
 import { productTypeOptions } from "@/lib/site-config";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 
 export function DevisForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [waLink, setWaLink] = useState<string | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const data = new FormData(event.currentTarget);
+    const fields = [
+      `Nom / Entreprise : ${data.get("name")}`,
+      `Téléphone / WhatsApp : ${data.get("phone")}`,
+      data.get("email") ? `Email : ${data.get("email")}` : null,
+      `Produit souhaité : ${data.get("product")}`,
+      data.get("quantity") ? `Quantité : ${data.get("quantity")}` : null,
+      data.get("dimensions") ? `Dimensions : ${data.get("dimensions")}` : null,
+      data.get("color") ? `Couleur / personnalisation : ${data.get("color")}` : null,
+      data.get("date") ? `Date souhaitée : ${data.get("date")}` : null,
+      data.get("message") ? `Message : ${data.get("message")}` : null,
+    ].filter(Boolean);
+    const message = `Nouvelle demande de devis — CYCLOREX RECYCLE\n\n${fields.join("\n")}`;
+
+    const link = buildWhatsAppLink(message);
+    setWaLink(link);
+    window.open(link, "_blank", "noopener,noreferrer");
   }
 
-  if (submitted) {
+  if (waLink) {
     return (
       <FormSuccess
-        title="Votre demande a bien été enregistrée"
-        description="Merci pour votre demande de devis. L'équipe CYCLOREX RECYCLE reviendra vers vous dès que possible."
+        title="Votre demande est prête"
+        description="Nous avons préparé votre message sur WhatsApp. Si la fenêtre ne s'est pas ouverte automatiquement, cliquez ci-dessous pour l'envoyer à l'équipe CYCLOREX RECYCLE."
+        whatsappHref={waLink}
       />
     );
   }
@@ -111,7 +129,7 @@ export function DevisForm() {
       </div>
 
       <Button type="submit" variant="accent" className="w-full sm:w-auto">
-        Envoyer ma demande
+        Envoyer ma demande sur WhatsApp
       </Button>
     </form>
   );

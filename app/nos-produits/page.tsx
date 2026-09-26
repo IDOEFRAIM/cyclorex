@@ -5,7 +5,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/sections/ProductCard";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { productCategories, targetClients } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -77,7 +76,6 @@ export default function NosProduitsPage() {
         </Container>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

@@ -4,20 +4,33 @@ import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { FormSuccess } from "@/components/forms/FormSuccess";
 import { inputClass, labelClass } from "@/components/forms/fieldStyles";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [waLink, setWaLink] = useState<string | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const data = new FormData(event.currentTarget);
+    const fields = [
+      `Nom : ${data.get("name")}`,
+      data.get("phone") ? `Téléphone : ${data.get("phone")}` : null,
+      `Email : ${data.get("email")}`,
+      `Message : ${data.get("message")}`,
+    ].filter(Boolean);
+    const message = `Nouveau message — CYCLOREX RECYCLE\n\n${fields.join("\n")}`;
+
+    const link = buildWhatsAppLink(message);
+    setWaLink(link);
+    window.open(link, "_blank", "noopener,noreferrer");
   }
 
-  if (submitted) {
+  if (waLink) {
     return (
       <FormSuccess
-        title="Votre message a bien été envoyé"
-        description="Merci de nous avoir contactés. L'équipe CYCLOREX RECYCLE vous répondra dès que possible."
+        title="Votre message est prêt"
+        description="Nous avons préparé votre message sur WhatsApp. Si la fenêtre ne s'est pas ouverte automatiquement, cliquez ci-dessous pour l'envoyer à l'équipe CYCLOREX RECYCLE."
+        whatsappHref={waLink}
       />
     );
   }
@@ -65,8 +78,8 @@ export function ContactForm() {
         />
       </div>
 
-      <Button type="submit" variant="primary" className="w-full sm:w-auto">
-        Envoyer le message
+      <Button type="submit" variant="accent" className="w-full sm:w-auto">
+        Envoyer sur WhatsApp
       </Button>
     </form>
   );

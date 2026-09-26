@@ -11,7 +11,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
           <Reveal delay={index * 70} className="h-full">
             <div className="group relative h-full rounded-2xl border border-ink/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-ink/5">
               <span
-                className={`text-3xl font-extrabold transition-transform duration-300 group-hover:scale-110 ${accents[index % accents.length]}`}
+                className={`font-display text-3xl font-semibold transition-transform duration-300 group-hover:scale-110 ${accents[index % accents.length]}`}
               >
                 {item.step}
               </span>

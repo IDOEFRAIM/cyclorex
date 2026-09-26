@@ -42,7 +42,7 @@ export function Header() {
       <Container size="wide" className="flex h-18 items-center justify-between gap-4 py-3">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 text-lg font-extrabold tracking-tight text-forest"
+          className="flex shrink-0 items-center gap-2 font-display text-lg font-semibold tracking-tight text-forest"
         >
           <Recycle className="h-6 w-6 text-lime-dark" strokeWidth={2} />
           <span>

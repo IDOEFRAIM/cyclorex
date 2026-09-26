@@ -4,29 +4,10 @@ export function HeroIllustration() {
       viewBox="0 0 400 400"
       className="h-full w-full"
       role="img"
-      aria-label="Illustration d'un pneu recyclé qui tourne, transformé en fauteuil végétal"
+      aria-label="Le Material Core : un pneu recyclé en rotation lente, transformé en fauteuil végétal"
     >
-      <circle cx="200" cy="200" r="180" fill="var(--color-clay)" opacity="0.1" />
-      <circle cx="200" cy="200" r="150" fill="var(--color-forest-light)" opacity="0.14" />
-
-      {/* Three recycling arrows orbiting slowly behind the tire */}
-      <g
-        className="animate-spin-slow origin-center"
-        style={{ animationDirection: "reverse", animationDuration: "26s" }}
-      >
-        {[0, 120, 240].map((angle) => (
-          <path
-            key={angle}
-            d="M200 54a146 146 0 0 1 118 60"
-            fill="none"
-            stroke="var(--color-lime)"
-            strokeWidth="7"
-            strokeLinecap="round"
-            opacity="0.55"
-            transform={`rotate(${angle} 200 200)`}
-          />
-        ))}
-      </g>
+      <circle cx="200" cy="200" r="180" fill="var(--color-forest-light)" opacity="0.1" />
+      <circle cx="200" cy="200" r="150" fill="var(--color-clay)" opacity="0.08" />
 
       {/* Tire, rotating like a wheel in motion */}
       <g className="animate-spin-slow origin-center">

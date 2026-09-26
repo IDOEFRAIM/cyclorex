@@ -5,7 +5,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { collectionSources, processSteps } from "@/lib/site-config";
 import { Truck } from "lucide-react";
 
@@ -88,7 +87,6 @@ export default function NosSolutionsPage() {
         </Reveal>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone, Recycle } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -7,6 +7,9 @@ import {
   TiktokIcon,
 } from "@/components/icons/SocialIcons";
 import { Container } from "@/components/ui/Container";
+import { TrustBadge } from "@/components/ui/TrustBadge";
+import { MicroLabel } from "@/components/ui/MicroLabel";
+import { TextLink } from "@/components/ui/TextLink";
 import {
   company,
   contact,
@@ -27,32 +30,38 @@ export function Footer() {
 
   return (
     <footer className="bg-ink text-cream">
-      <div
-        aria-hidden
-        className="h-1 w-full"
-        style={{
-          background:
-            "linear-gradient(90deg, var(--color-forest-light), var(--color-lime), var(--color-clay))",
-        }}
-      />
-      <Container className="grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
+      <Container size="wide" className="py-20 sm:py-28">
+        <MicroLabel className="text-clay">Parlons de votre projet</MicroLabel>
+        <h2 className="mt-6 font-display text-5xl font-semibold leading-[0.98] tracking-tight sm:text-7xl lg:text-8xl">
+          Repensons
+          <br />
+          le déchet.
+        </h2>
+        <div className="mt-10">
+          <TextLink href="/contact" dark size="lg">
+            Parlons
+          </TextLink>
+        </div>
+      </Container>
+
+      <Container
+        size="wide"
+        className="grid gap-10 border-t border-cream/10 py-14 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <div className="lg:col-span-1">
-          <div className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-            <Recycle className="h-6 w-6 text-lime" strokeWidth={2} />
-            <span>{company.name}</span>
+          <p className="font-display text-base font-semibold tracking-tight">
+            {company.name}
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-cream/50">
+            Recyclage — Innovation — Économie circulaire
+          </p>
+          <div className="mt-5">
+            <TrustBadge light />
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-cream/60">
-            Recyclage • Innovation • Économie circulaire
-          </p>
-          <p className="mt-4 text-sm font-medium text-cream/80">
-            &ldquo;{company.slogan}&rdquo;
-          </p>
         </div>
 
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-lime">
-            Navigation
-          </h3>
+          <MicroLabel className="text-cream/40">Navigation</MicroLabel>
           <ul className="mt-4 space-y-2">
             {mainNav.map((link) => (
               <li key={link.href}>
@@ -68,9 +77,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-lime">
-            Découvrir
-          </h3>
+          <MicroLabel className="text-cream/40">Découvrir</MicroLabel>
           <ul className="mt-4 space-y-2">
             {footerSecondaryNav.map((link) => (
               <li key={link.href}>
@@ -86,16 +93,29 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-lime">
-            Contact
-          </h3>
+          <MicroLabel className="text-cream/40">Contact</MicroLabel>
           <ul className="mt-4 space-y-3 text-sm text-cream/70">
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-lime" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cream/40" />
               <span>{contact.address}</span>
             </li>
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 shrink-0 text-lime" />
+              <MessageCircle className="h-4 w-4 shrink-0 text-cream/40" />
+              {contact.whatsapp ? (
+                <a
+                  href={`https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-cream"
+                >
+                  {contact.whatsapp}
+                </a>
+              ) : (
+                <span className="text-cream/40">WhatsApp à venir</span>
+              )}
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone className="h-4 w-4 shrink-0 text-cream/40" />
               {contact.phone ? (
                 <a href={`tel:${contact.phone}`} className="hover:text-cream">
                   {contact.phone}
@@ -105,7 +125,7 @@ export function Footer() {
               )}
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 shrink-0 text-lime" />
+              <Mail className="h-4 w-4 shrink-0 text-cream/40" />
               {contact.email ? (
                 <a href={`mailto:${contact.email}`} className="hover:text-cream">
                   {contact.email}
@@ -117,7 +137,7 @@ export function Footer() {
           </ul>
 
           <div className="mt-5 flex gap-3">
-            {socialIcons.map(({ key, href, Icon, label }, index) =>
+            {socialIcons.map(({ key, href, Icon, label }) =>
               href ? (
                 <a
                   key={key}
@@ -125,19 +145,17 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className={`flex h-9 w-9 touch-manipulation items-center justify-center rounded-full bg-cream/10 text-cream transition-all duration-200 hover:-translate-y-0.5 hover:text-ink ${
-                    index % 2 === 0 ? "hover:bg-lime" : "hover:bg-clay hover:text-cream"
-                  }`}
+                  className="flex h-8 w-8 touch-manipulation items-center justify-center rounded-full border border-cream/15 text-cream/60 transition-colors hover:border-clay hover:text-clay"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-3.5 w-3.5" />
                 </a>
               ) : (
                 <span
                   key={key}
                   aria-hidden
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-cream/5 text-cream/30"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/10 text-cream/20"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-3.5 w-3.5" />
                 </span>
               )
             )}
@@ -146,11 +164,11 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-cream/10 py-6">
-        <Container className="flex flex-col items-center justify-between gap-2 text-xs text-cream/50 sm:flex-row">
+        <Container size="wide" className="flex flex-col items-center justify-between gap-2 text-xs text-cream/40 sm:flex-row">
           <p>
             © {year} {company.name}. Tous droits réservés.
           </p>
-          <p>{company.workshop}</p>
+          <p className="font-mono">{company.workshop}</p>
         </Container>
       </div>
     </footer>

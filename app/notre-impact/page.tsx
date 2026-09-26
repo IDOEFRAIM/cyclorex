@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImpactCard } from "@/components/sections/ImpactCard";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import { impactObjectives } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -49,7 +48,6 @@ export default function NotreImpactPage() {
         </Container>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

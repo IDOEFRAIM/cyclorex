@@ -31,7 +31,7 @@ export const company = {
 // Components must treat these as "coming soon" rather than inventing data.
 export const contact = {
   phone: null as string | null,
-  whatsapp: null as string | null,
+  whatsapp: "+226 62 45 46 76",
   email: null as string | null,
   address: "Pissy, Ouagadougou, Burkina Faso",
   gpsUrl: null as string | null,

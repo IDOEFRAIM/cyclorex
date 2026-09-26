@@ -5,20 +5,36 @@ import { Button } from "@/components/ui/Button";
 import { FormSuccess } from "@/components/forms/FormSuccess";
 import { inputClass, labelClass } from "@/components/forms/fieldStyles";
 import { partnershipFormTypes } from "@/lib/site-config";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 
 export function PartnerForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [waLink, setWaLink] = useState<string | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const data = new FormData(event.currentTarget);
+    const types = data.getAll("partnershipType").join(", ");
+    const fields = [
+      `Nom / Organisation : ${data.get("name")}`,
+      data.get("orgType") ? `Type d'organisation : ${data.get("orgType")}` : null,
+      data.get("phone") ? `Téléphone : ${data.get("phone")}` : null,
+      `Email : ${data.get("email")}`,
+      types ? `Type de partenariat souhaité : ${types}` : null,
+      data.get("message") ? `Message : ${data.get("message")}` : null,
+    ].filter(Boolean);
+    const message = `Nouvelle proposition de partenariat — CYCLOREX RECYCLE\n\n${fields.join("\n")}`;
+
+    const link = buildWhatsAppLink(message);
+    setWaLink(link);
+    window.open(link, "_blank", "noopener,noreferrer");
   }
 
-  if (submitted) {
+  if (waLink) {
     return (
       <FormSuccess
-        title="Votre proposition a bien été envoyée"
-        description="Merci pour votre intérêt. L'équipe CYCLOREX RECYCLE étudiera votre proposition de partenariat et reviendra vers vous."
+        title="Votre proposition est prête"
+        description="Nous avons préparé votre proposition de partenariat sur WhatsApp. Si la fenêtre ne s'est pas ouverte automatiquement, cliquez ci-dessous pour l'envoyer à l'équipe CYCLOREX RECYCLE."
+        whatsappHref={waLink}
       />
     );
   }
@@ -93,8 +109,8 @@ export function PartnerForm() {
         />
       </div>
 
-      <Button type="submit" variant="secondary" className="w-full sm:w-auto">
-        Proposer un partenariat
+      <Button type="submit" variant="accent" className="w-full sm:w-auto">
+        Envoyer sur WhatsApp
       </Button>
     </form>
   );

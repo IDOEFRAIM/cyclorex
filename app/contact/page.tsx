@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ComingSoon } from "@/components/ui/ComingSoon";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { company, contact, social } from "@/lib/site-config";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -47,6 +47,25 @@ export default function ContactPage() {
                 <p className="mt-1 text-sm text-ink/50">
                   Zone d&apos;intervention : {company.cities.join(" · ")}
                 </p>
+              </ContactRow>
+
+              <ContactRow
+                icon={<MessageCircle className="h-5 w-5" />}
+                label="WhatsApp"
+                accent="clay"
+              >
+                {contact.whatsapp ? (
+                  <a
+                    href={`https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-clay-dark hover:underline"
+                  >
+                    {contact.whatsapp}
+                  </a>
+                ) : (
+                  <ComingSoon />
+                )}
               </ContactRow>
 
               <ContactRow icon={<Phone className="h-5 w-5" />} label="Téléphone" accent="forest">

@@ -5,7 +5,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/icons";
-import { CtaBanner } from "@/components/sections/CtaBanner";
 import {
   company,
   environmentalDimensions,
@@ -89,21 +88,19 @@ export default function AProposPage() {
       </section>
 
       <section className="relative overflow-hidden bg-forest py-14 text-cream sm:py-20 lg:py-28">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-clay/15 blur-3xl"
-        />
         <Container className="relative max-w-3xl">
           <Reveal>
             <span className="mb-4 inline-block text-xs font-bold uppercase tracking-[0.2em] text-lime">
               Notre vision
             </span>
-            <p className="text-2xl font-semibold italic leading-snug sm:text-3xl">
-              &laquo;&nbsp;Faire de CYCLOREX RECYCLE une entreprise africaine de
-              référence dans la valorisation des déchets et l&apos;économie
-              circulaire, capable de transformer des matières considérées comme
-              inutiles en produits à forte valeur économique, sociale et
-              environnementale.&nbsp;&raquo;
+            <span aria-hidden className="block font-display text-6xl leading-none text-gold/50">
+              &ldquo;
+            </span>
+            <p className="-mt-4 font-display text-2xl italic leading-snug sm:text-3xl">
+              Faire de CYCLOREX RECYCLE une entreprise africaine de référence
+              dans la valorisation des déchets et l&apos;économie circulaire,
+              capable de transformer des matières considérées comme inutiles en
+              produits à forte valeur économique, sociale et environnementale.
             </p>
             <p className="mt-6 leading-relaxed text-cream/80">
               À long terme, CYCLOREX souhaite développer ses capacités de
@@ -175,7 +172,6 @@ export default function AProposPage() {
         </Container>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

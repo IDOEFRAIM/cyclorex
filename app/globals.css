@@ -5,7 +5,8 @@
   --foreground: #1b1712;
 
   /* Brand palette — warm sand, deep recycling green, terracotta (soil/tire warmth,
-     African contemporary energy) and a vivid leaf accent for innovation/growth. */
+     African contemporary energy), a vivid leaf accent, and a muted brass/gold
+     reserved for signals of credibility and craft (badges, dividers, quotes). */
   --color-forest: #0e3b27;
   --color-forest-light: #1f7a4d;
   --color-clay: #c75b2c;
@@ -14,6 +15,10 @@
   --color-cream: #f7f1e1;
   --color-lime: #a6e22e;
   --color-lime-dark: #82b92a;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #a3801f;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -27,8 +32,15 @@
   --color-cream: var(--color-cream);
   --color-lime: var(--color-lime);
   --color-lime-dark: var(--color-lime-dark);
+  --color-gold: var(--color-gold);
+  --color-gold-dark: var(--color-gold-dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -41,16 +53,44 @@ body {
   color: var(--color-ink);
 }
 
-/* Scroll-reveal: toggled by the Reveal component via IntersectionObserver. */
+/* Custom cursor: only hides the native pointer once CustomCursor has mounted
+   (fine-pointer, motion-OK devices). Form fields keep the native text caret. */
+.custom-cursor-active {
+  cursor: none;
+}
+
+.custom-cursor-active input,
+.custom-cursor-active textarea,
+.custom-cursor-active select {
+  cursor: auto;
+}
+
+/* Scroll-reveal: toggled by the Reveal component via IntersectionObserver.
+   Deliberately opacity+transform only (no filter/blur) — those are cheap to
+   animate on low-end mobile GPUs, which is where most visitors will be. */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(22px) scale(0.98);
+  transition:
+    opacity 0.7s var(--ease-premium),
+    transform 0.7s var(--ease-premium);
+  will-change: opacity, transform;
 }
 
 .reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+/* Line that grows from left to right once its Reveal ancestor becomes visible. */
+.line-grow {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s var(--ease-premium);
+}
+
+.reveal-visible .line-grow {
+  transform: scaleX(1);
 }
 
 @keyframes spin-slow {
@@ -93,7 +133,7 @@ body {
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -102,18 +142,97 @@ body {
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-in-up 0.9s var(--ease-premium) both;
 }
 
 .animate-fade-in-up-delay-1 {
-  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  animation: fade-in-up 0.9s var(--ease-premium) 0.12s both;
 }
 
 .animate-fade-in-up-delay-2 {
-  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  animation: fade-in-up 0.9s var(--ease-premium) 0.24s both;
+}
+
+.animate-fade-in-up-delay-3 {
+  animation: fade-in-up 0.9s var(--ease-premium) 0.36s both;
+}
+
+.animate-fade-in-up-delay-4 {
+  animation: fade-in-up 0.9s var(--ease-premium) 0.48s both;
+}
+
+/* Editorial headline reveal: the line slides up out of its own clipped mask. */
+@keyframes mask-reveal {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-mask-reveal {
+  animation: mask-reveal 1s var(--ease-premium) both;
+}
+
+.animate-mask-reveal-delay-1 {
+  animation: mask-reveal 1s var(--ease-premium) 0.1s both;
+}
+
+.animate-mask-reveal-delay-2 {
+  animation: mask-reveal 1s var(--ease-premium) 0.2s both;
+}
+
+/* Route-change entrance: replayed each time PageTransition's key changes. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-in {
+  animation: page-in 0.5s var(--ease-premium) both;
+}
+
+/* Cursor-reactive spotlight for hero sections (desktop pointer devices only). */
+.spotlight {
+  position: relative;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    480px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgba(166, 226, 46, 0.14),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .spotlight::before {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .reveal {
     opacity: 1;
     transform: none;
@@ -125,7 +244,13 @@ body {
   .animate-pulse-ring,
   .animate-fade-in-up,
   .animate-fade-in-up-delay-1,
-  .animate-fade-in-up-delay-2 {
+  .animate-fade-in-up-delay-2,
+  .animate-fade-in-up-delay-3,
+  .animate-fade-in-up-delay-4,
+  .animate-mask-reveal,
+  .animate-mask-reveal-delay-1,
+  .animate-mask-reveal-delay-2,
+  .animate-page-in {
     animation: none;
   }
 
